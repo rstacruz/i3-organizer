@@ -43,6 +43,11 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
+daemonize-process@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/daemonize-process/-/daemonize-process-2.0.0.tgz#c27d6404d5bef4d8159497b332c8cb19a1d747c3"
+  integrity sha512-CovukQi+O3D3FXt50hTWGQ1jyVzAgJrTJUxV2GVNWoA5z5DsYzrWaTCRqu/bnLIA20rvnhxx+Cfn/kQLASe2/w==
+
 decamelize-keys@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/decamelize-keys/-/decamelize-keys-1.1.0.tgz#d171a87933252807eb3cb61dc1c1445d078df2d9"
@@ -192,6 +197,11 @@ normalize-package-data@^2.3.2, normalize-package-data@^2.3.4:
     is-builtin-module "^1.0.0"
     semver "2 || 3 || 4 || 5"
     validate-npm-package-license "^3.0.1"
+
+npid@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/npid/-/npid-0.4.0.tgz#a1169823d3cb91b7b3d66ed62180cc338526237e"
+  integrity sha1-oRaYI9PLkbez1m7WIYDMM4UmI34=
 
 p-limit@^1.1.0:
   version "1.3.0"
