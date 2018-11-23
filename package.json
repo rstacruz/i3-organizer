@@ -1,9 +1,12 @@
 {
-  "name": "i3-organize-workspaces",
+  "name": "i3-organizer",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Rico Sta. Cruz <rstacruz@users.noreply.github.com>",
   "license": "MIT",
+  "bin": {
+    "i3-organizer": "bin/i3-organizer"
+  }
   "dependencies": {
     "daemonize-process": "^2.0.0",
     "i3": "^0.2.1",
