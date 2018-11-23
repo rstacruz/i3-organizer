@@ -1,0 +1,11 @@
+{
+  "name": "i3-organize-workspaces",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Rico Sta. Cruz <rstacruz@users.noreply.github.com>",
+  "license": "MIT",
+  "dependencies": {
+    "meow": "^5.0.0",
+    "thenify": "^3.3.0"
+  }
+}
