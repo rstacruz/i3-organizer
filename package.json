@@ -5,6 +5,7 @@
   "author": "Rico Sta. Cruz <rstacruz@users.noreply.github.com>",
   "license": "MIT",
   "dependencies": {
+    "i3": "^0.2.1",
     "meow": "^5.0.0",
     "thenify": "^3.3.0"
   }

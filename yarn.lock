@@ -63,6 +63,11 @@ error-ex@^1.3.1:
   dependencies:
     is-arrayish "^0.2.1"
 
+fastqueue@~0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/fastqueue/-/fastqueue-0.1.0.tgz#6c691016b3806186476eeb05a717babb8f633c19"
+  integrity sha1-bGkQFrOAYYZHbusFpxe6u49jPBk=
+
 find-up@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/find-up/-/find-up-2.1.0.tgz#45d1b7e506c717ddd482775a2b77920a3c0c57a7"
@@ -79,6 +84,13 @@ hosted-git-info@^2.1.4:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
   integrity sha512-7T/BxH19zbcCTa8XkMlbK5lTo1WtgkFi3GvdWEyNuc4Vex7/9Dqbnpsf4JMydcfj9HCg4zUWFTL3Za6lapg5/w==
+
+i3@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/i3/-/i3-0.2.1.tgz#ac28580bd99fbc277951978730801f9d5e7e5fe4"
+  integrity sha1-rChYC9mfvCd5UZeHMIAfnV5+X+Q=
+  dependencies:
+    fastqueue "~0.1.0"
 
 indent-string@^3.0.0:
   version "3.2.0"
