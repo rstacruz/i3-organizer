@@ -8,6 +8,7 @@
     "i3-organizer": "bin/i3-organizer"
   },
   "dependencies": {
+    "array-uniq": "^2.0.0",
     "daemonize-process": "^2.0.0",
     "i3": "^0.2.1",
     "lodash.throttle": "^4.1.1",
