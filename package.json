@@ -14,6 +14,7 @@
     "lodash.throttle": "^4.1.1",
     "meow": "^5.0.0",
     "npid": "^0.4.0",
+    "rc": "^1.2.8",
     "thenify": "^3.3.0"
   },
   "devDependencies": {
