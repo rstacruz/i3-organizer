@@ -1,3 +1,4 @@
 node_modules
 __tree.json
 package-lock.json
+/dist

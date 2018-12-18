@@ -1,0 +1,20 @@
+version: '3'
+
+# Optional Docker setup for development.
+# You can enter a shell with:
+#
+#     docker-compose run --rm web bash
+#
+# Or run yarn/npm scripts:
+#
+#     docker-compose run --rm web yarn pkg:build
+#
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: '1000'
+    volumes:
+      - .:/app
+    command: ["bash"]

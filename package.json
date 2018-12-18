@@ -18,9 +18,11 @@
     "thenify": "^3.3.0"
   },
   "devDependencies": {
-    "flow-bin": "^0.86.0"
+    "flow-bin": "^0.86.0",
+    "pkg": "^4.3.5"
   },
   "scripts": {
-    "flow": "flow"
+    "flow": "flow",
+    "pkg:build": "mkdir -p dist; pkg bin/i3-organizer --out-path dist"
   }
 }
