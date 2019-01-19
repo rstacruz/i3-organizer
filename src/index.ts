@@ -1,15 +1,10 @@
-// @flow
-
-/*::
-  import type { Options } from './types'
-*/
-
 import Meow from 'meow'
 import { execSync } from 'child_process'
 import { autoRename } from './actions'
 import Conf from './config'
 import { startServer } from './server'
 import { checkI3 } from './check_i3'
+import { Options } from './types'
 import i3 from 'i3'
 
 function cli() {
@@ -94,7 +89,7 @@ async function run() {
  * Returns i3 messages
  */
 
-function organize(options /*: Options */) /*: string[] */ {
+function organize(options: Options): string[] {
   // Will throw an error if it doesn't work
   const result = execSync('i3-msg -t get_tree')
   const root = JSON.parse(result.toString())
@@ -107,7 +102,7 @@ function organize(options /*: Options */) /*: string[] */ {
  * Runs i3 messages
  */
 
-function execute(messages /*: string[] */) /*: void */ {
+function execute(messages: string[]): void {
   execSync(`i3-msg ${messages.join(', ')}`)
 }
 

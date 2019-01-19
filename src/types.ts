@@ -8,6 +8,7 @@ export interface Options {
   emptyFormat: string
   focusedOnly?: boolean
   lockedSymbol?: string | false
+  output?: string
   classAliases?: ClassAliases
 }
 
@@ -50,7 +51,7 @@ export interface WorkspaceNode extends NodeBase {
   output: string // 'HDMI1'
   name: string // '1:Vim'
   gaps?: { inner: number; outer: number }
-  focus: number[]
+  focus: string[]
 }
 
 export type AnyNode = NodeBase

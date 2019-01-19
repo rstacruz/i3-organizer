@@ -7,12 +7,14 @@ import {
   ClassAliases
 } from './types'
 
+import { compact } from './utils'
+
 export interface RenameMsgOptions {
   number: number
   workspaceFormat: string
   emptyFormat: string
-  lockedSymbol: string | boolean
-  classAliases: ClassAliases | void
+  lockedSymbol?: string | false
+  classAliases?: ClassAliases
 }
 
 import {
@@ -20,7 +22,7 @@ import {
   getClassName,
   getConcernedWindows,
   query,
-  find
+  isWorkspace
 } from './utils'
 import uniq from 'array-uniq'
 
@@ -29,10 +31,7 @@ import uniq from 'array-uniq'
  */
 
 function autoRename(options: Options, root: RootNode): string[] {
-  const workspaces = query(
-    root,
-    (node: AnyNode) => node.type === 'workspace' && node.output !== '__i3'
-  )
+  const workspaces = query(root, isWorkspace)
   let result: any[] = []
   let number = 0
 
@@ -40,7 +39,7 @@ function autoRename(options: Options, root: RootNode): string[] {
     if (subnode.type !== 'workspace') return
 
     // Coerce to a workspace.
-    const workspace /*: WorkspaceNode */ = subnode
+    const workspace: WorkspaceNode = subnode as WorkspaceNode
 
     number += 1
 
@@ -83,9 +82,9 @@ function renameMsg(
   const oldName = workspace.name
 
   // Find class names, map them to the alias map if need be
-  let nodeNames: string[] = nodes
-    .map((node: AnyNode) => node && getClassName(node))
-    .filter(Boolean)
+  let nodeNames: string[] = compact(
+    nodes.map((node: AnyNode) => node && getClassName(node))
+  )
 
   let focusedNames = nodeNames.map(
     (className: string) => (aliases && aliases[className]) || className

@@ -52,7 +52,7 @@ function getConcernedWindows(
   workspace: WorkspaceNode
 ): AnyNode[] {
   if (options.focusedOnly) {
-    return [getFocusedWindow(workspace)].filter(Boolean)
+    return compact([getFocusedWindow(workspace)])
   } else {
     return query(
       workspace,
@@ -71,12 +71,12 @@ function getFocusedWindow(workspace: WorkspaceNode) {
   // For non-visible workspaces, there's a running list of focused
   // windows under `focus`. If that exists, use it.
   if (workspace.focus) {
-    const node: AnyNode | null = workspace.focus.reduce(
-      (result: AnyNode | null, id: string) => {
+    const node: AnyNode | void = workspace.focus.reduce(
+      (result: AnyNode | void, id: string) => {
         if (result) return result
         return find(workspace, (node: AnyNode) => node.id === id && node.window)
       },
-      null
+      undefined
     )
 
     if (node) return node
@@ -112,8 +112,34 @@ function getLabel(name: string) {
   }
 }
 
+/**
+ * Like lodash.compact.
+ * Separated here so we can ts-ignore it away.
+ */
+
+function compact<T>(list: (T | undefined)[]): T[] {
+  // @ts-ignore
+  return list.filter(Boolean)
+}
+
+/**
+ * Check if a given node is a workspace, and not an internal one at that
+ */
+
+function isWorkspace(node: AnyNode) {
+  return node.type === 'workspace' && (node as WorkspaceNode).output !== '__i3'
+}
+
 /*
  * Export
  */
 
-export { find, getClassName, getConcernedWindows, getLabel, query }
+export {
+  find,
+  getClassName,
+  getConcernedWindows,
+  getLabel,
+  query,
+  compact,
+  isWorkspace
+}
