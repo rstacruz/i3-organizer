@@ -1,21 +1,16 @@
-// @flow
-
-/*::
-  import type { Options } from './types'
-*/
-
-const Meow = require('meow')
-const { execSync } = require('child_process')
-const { autoRename } = require('./actions')
-const Conf = require('./config')
-const { startServer } = require('./server')
-const { checkI3 } = require('./check_i3')
-const i3 = require('i3')
+import Meow from 'meow'
+import { execSync } from 'child_process'
+import { autoRename } from './actions'
+import Conf from './config'
+import { startServer } from './server'
+import { checkI3 } from './check_i3'
+import { Options } from './types'
+import i3 from 'i3'
 
 function cli() {
   return Meow(
     `
-    Usage: 
+    Usage:
       $ ${process.argv[1]} [options]
 
     Mode:
@@ -94,7 +89,7 @@ async function run() {
  * Returns i3 messages
  */
 
-function organize(options /*: Options */) /*: string[] */ {
+function organize(options: Options): string[] {
   // Will throw an error if it doesn't work
   const result = execSync('i3-msg -t get_tree')
   const root = JSON.parse(result.toString())
@@ -107,7 +102,7 @@ function organize(options /*: Options */) /*: string[] */ {
  * Runs i3 messages
  */
 
-function execute(messages /*: string[] */) /*: void */ {
+function execute(messages: string[]): void {
   execSync(`i3-msg ${messages.join(', ')}`)
 }
 

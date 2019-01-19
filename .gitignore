@@ -1,4 +1,4 @@
 node_modules
-__tree.json
-package-lock.json
-/dist
+
+# Compiled from /src via babel
+lib

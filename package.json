@@ -18,11 +18,22 @@
     "thenify": "^3.3.0"
   },
   "devDependencies": {
-    "flow-bin": "^0.86.0",
-    "pkg": "^4.3.5"
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/array-uniq": "^1.0.1",
+    "@types/lodash.throttle": "^4.1.4",
+    "@types/meow": "^5.0.0",
+    "@types/node": "^10.12.18",
+    "npm-run-all": "^4.1.5",
+    "pkg": "^4.3.5",
+    "typescript": "^3.2.4"
   },
   "scripts": {
-    "flow": "flow",
-    "pkg:build": "mkdir -p dist; pkg bin/i3-organizer --out-path dist"
+    "prepare": "run-s build",
+    "pkg:build": "mkdir -p dist; pkg bin/i3-organizer --out-path dist",
+    "watch": "babel --watch src --out-dir lib --extensions '.ts'",
+    "build": "babel src --out-dir lib --extensions '.ts'"
   }
 }

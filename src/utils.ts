@@ -1,15 +1,6 @@
-// @flow
+import { AnyNode, ContainerNode, Options, WorkspaceNode } from './types'
 
-/*::
-  import type {
-    AnyNode,
-    ContainerNode,
-    Options,
-    WorkspaceNode
-  } from './types'
-*/
-
-function getClassName(con /*: AnyNode */) /*: ?string */ {
+function getClassName(con: AnyNode): string | undefined {
   return con.window_properties && con.window_properties.class
 }
 
@@ -18,10 +9,10 @@ function getClassName(con /*: AnyNode */) /*: ?string */ {
  */
 
 function query(
-  root /*: AnyNode */,
-  matcherFn /*: AnyNode => any */,
-  result /*: AnyNode[] */ = []
-) /*: AnyNode[] */ {
+  root: AnyNode,
+  matcherFn: (node: AnyNode) => any,
+  result: AnyNode[] = []
+): AnyNode[] {
   if (matcherFn(root)) {
     result = [...result, root]
   }
@@ -37,16 +28,16 @@ function query(
 }
 
 function find(
-  root /*: AnyNode */,
-  matcherFn /*: (AnyNode) => any */
-) /*: ?AnyNode */ {
+  root: AnyNode,
+  matcherFn: (node: AnyNode) => any
+): AnyNode | void {
   if (matcherFn(root)) {
     return root
   }
 
   if (root.nodes) {
     return [...root.nodes, ...(root.floating_nodes || [])].reduce(
-      (result, node) => result || find(node, matcherFn),
+      (result: any, node: any) => result || find(node, matcherFn),
       null
     )
   }
@@ -57,11 +48,11 @@ function find(
  */
 
 function getConcernedWindows(
-  options /*: Options */,
-  workspace /*: WorkspaceNode */
-) /*: AnyNode[] */ {
+  options: Options,
+  workspace: WorkspaceNode
+): AnyNode[] {
   if (options.focusedOnly) {
-    return [getFocusedWindow(workspace)].filter(Boolean)
+    return compact([getFocusedWindow(workspace)])
   } else {
     return query(
       workspace,
@@ -74,17 +65,18 @@ function getConcernedWindows(
  * Returns the focused window in a workspace.
  */
 
-function getFocusedWindow(workspace /*: WorkspaceNode */) {
+function getFocusedWindow(workspace: WorkspaceNode) {
   if (workspace.type !== 'workspace') return
 
   // For non-visible workspaces, there's a running list of focused
   // windows under `focus`. If that exists, use it.
   if (workspace.focus) {
-    const node /*: ?AnyNode */ = workspace.focus.reduce(
-      (result, id) =>
-        result ||
-        find(workspace, (node /*: AnyNode */) => node.id === id && node.window),
-      null
+    const node: AnyNode | void = workspace.focus.reduce(
+      (result: AnyNode | void, id: string) => {
+        if (result) return result
+        return find(workspace, (node: AnyNode) => node.id === id && node.window)
+      },
+      undefined
     )
 
     if (node) return node
@@ -111,7 +103,7 @@ function getFocusedWindow(workspace /*: WorkspaceNode */) {
  *     getLabel('3:Vim') // => 'Vim'
  */
 
-function getLabel(name /*: string */) {
+function getLabel(name: string) {
   if (name.includes(':')) {
     const [_n, label] = name.split(':')
     return label
@@ -120,14 +112,34 @@ function getLabel(name /*: string */) {
   }
 }
 
+/**
+ * Like lodash.compact.
+ * Separated here so we can ts-ignore it away.
+ */
+
+function compact<T>(list: (T | undefined)[]): T[] {
+  // @ts-ignore
+  return list.filter(Boolean)
+}
+
+/**
+ * Check if a given node is a workspace, and not an internal one at that
+ */
+
+function isWorkspace(node: AnyNode) {
+  return node.type === 'workspace' && (node as WorkspaceNode).output !== '__i3'
+}
+
 /*
  * Export
  */
 
-module.exports = {
+export {
   find,
   getClassName,
   getConcernedWindows,
   getLabel,
-  query
+  query,
+  compact,
+  isWorkspace
 }

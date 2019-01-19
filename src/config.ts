@@ -30,4 +30,4 @@ const DEFAULTS = {
 
 const conf = require('rc')(pkg.name, DEFAULTS)
 
-module.exports = conf
+export default conf
