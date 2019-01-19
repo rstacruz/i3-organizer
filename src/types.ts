@@ -1,6 +1,4 @@
-// @flow
-
-export type ClassAliases = {
+export interface ClassAliases {
   [string]: string
 }
 
