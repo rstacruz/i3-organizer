@@ -18,8 +18,13 @@
     "thenify": "^3.3.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-typescript": "^7.1.0",
     "flow-bin": "^0.86.0",
-    "pkg": "^4.3.5"
+    "pkg": "^4.3.5",
+    "typescript": "^3.2.4"
   },
   "scripts": {
     "flow": "flow",
