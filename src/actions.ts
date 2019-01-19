@@ -1,49 +1,42 @@
-// @flow
+import {
+  RootNode,
+  AnyNode,
+  WorkspaceNode,
+  ContainerNode,
+  Options,
+  ClassAliases
+} from './types'
 
-/*::
-  import type {
-    RootNode,
-    AnyNode,
-    WorkspaceNode,
-    ContainerNode,
-    Options,
-    ClassAliases
-  } from './types'
+export interface RenameMsgOptions {
+  number: number
+  workspaceFormat: string
+  emptyFormat: string
+  lockedSymbol: string | boolean
+  classAliases: ClassAliases | void
+}
 
-  export type RenameMsgOptions = {
-    number: number,
-    workspaceFormat: string,
-    emptyFormat: string,
-    lockedSymbol: string | boolean,
-    classAliases: ?ClassAliases
-  }
-*/
-
-const {
+import {
   getLabel,
   getClassName,
   getConcernedWindows,
   query,
   find
-} = require('./utils')
-const uniq = require('array-uniq')
+} from './utils'
+import uniq from 'array-uniq'
 
 /**
  * Autorename workspaces.
  */
 
-function autoRename(
-  options /*: Options */,
-  root /*: RootNode */
-) /*: string[] */ {
+function autoRename(options: Options, root: RootNode): string[] {
   const workspaces = query(
     root,
-    (node /*: AnyNode */) => node.type === 'workspace' && node.output !== '__i3'
+    (node: AnyNode) => node.type === 'workspace' && node.output !== '__i3'
   )
-  let result = []
+  let result: any[] = []
   let number = 0
 
-  workspaces.forEach((subnode /*: AnyNode */) => {
+  workspaces.forEach((subnode: AnyNode) => {
     if (subnode.type !== 'workspace') return
 
     // Coerce to a workspace.
@@ -55,14 +48,13 @@ function autoRename(
     // (if `focusedOnly` is true), or all the windows in the node.
     const nodes = getConcernedWindows(options, workspace)
 
+    const renameOpts: RenameMsgOptions = {
+      ...options,
+      number: options.renumber ? number : workspace.num
+    }
+
     // Add the "rename" i3 messages.
-    result = [
-      ...result,
-      ...renameMsg(options, workspace, nodes, {
-        ...options,
-        number: options.renumber ? number : workspace.num
-      })
-    ]
+    result = [...result, ...renameMsg(options, workspace, nodes, renameOpts)]
   })
 
   return result
@@ -76,27 +68,28 @@ function autoRename(
  */
 
 function renameMsg(
-  options /*: Options */,
-  workspace /*: WorkspaceNode */,
-  nodes /*: AnyNode[] */,
+  options: Options,
+  workspace: WorkspaceNode,
+  nodes: AnyNode[],
   {
     number,
     workspaceFormat: format,
     emptyFormat,
     lockedSymbol,
     classAliases: aliases
-  } /*: RenameMsgOptions */
+  }: RenameMsgOptions
 ) {
   // eg, '2:Vim'
   const oldName = workspace.name
 
   // Find class names, map them to the alias map if need be
-  let focusedNames = nodes
-    .map(node => node && getClassName(node))
+  let nodeNames: string[] = nodes
+    .map((node: AnyNode) => node && getClassName(node))
     .filter(Boolean)
-    .map(
-      (className /*: string */) => (aliases && aliases[className]) || className
-    )
+
+  let focusedNames = nodeNames.map(
+    (className: string) => (aliases && aliases[className]) || className
+  )
 
   let focusedName = uniq(focusedNames.sort()).join(' · ')
   let newName
@@ -131,4 +124,4 @@ function renameMsg(
  * Export
  */
 
-module.exports = { autoRename }
+export { autoRename }

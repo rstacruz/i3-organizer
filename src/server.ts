@@ -1,8 +1,11 @@
-const throttle = require('lodash.throttle')
+import throttle from 'lodash.throttle'
 
-function startServer(
-  { onWorkspace, simulate } /*: { onWorkspace: () => any, simulate: boolean } */
-) {
+interface ServerOpts {
+  onWorkspace: () => any
+  simulate: boolean
+}
+
+function startServer({ onWorkspace, simulate }: ServerOpts) {
   const i3 = require('i3').createClient()
 
   const ping = () => {
@@ -23,4 +26,4 @@ function startServer(
   ping()
 }
 
-module.exports = { startServer }
+export { startServer }

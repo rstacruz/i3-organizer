@@ -1,15 +1,11 @@
-// @flow
-const spawn = require('child_process').spawn
-
-/*::
-  import type { I3Version } from './types'
-*/
+import { spawn } from 'child_process'
+import { I3Version } from './types'
 
 /**
  * Checks if I3 is available.
  */
 
-function checkI3() /*: Promise<I3Version> */ {
+function checkI3(): Promise<I3Version> {
   return new Promise((resolve, reject) => {
     const proc = spawn('i3-msg', ['-t', 'get_version'])
     let result = ''
@@ -31,4 +27,4 @@ function checkI3() /*: Promise<I3Version> */ {
   })
 }
 
-module.exports = { checkI3 }
+export { checkI3 }

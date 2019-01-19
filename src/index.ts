@@ -4,18 +4,18 @@
   import type { Options } from './types'
 */
 
-const Meow = require('meow')
-const { execSync } = require('child_process')
-const { autoRename } = require('./actions')
-const Conf = require('./config')
-const { startServer } = require('./server')
-const { checkI3 } = require('./check_i3')
-const i3 = require('i3')
+import Meow from 'meow'
+import { execSync } from 'child_process'
+import { autoRename } from './actions'
+import Conf from './config'
+import { startServer } from './server'
+import { checkI3 } from './check_i3'
+import i3 from 'i3'
 
 function cli() {
   return Meow(
     `
-    Usage: 
+    Usage:
       $ ${process.argv[1]} [options]
 
     Mode:
