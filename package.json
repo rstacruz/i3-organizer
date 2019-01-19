@@ -26,6 +26,8 @@
     "typescript": "^3.2.4"
   },
   "scripts": {
-    "pkg:build": "mkdir -p dist; pkg bin/i3-organizer --out-path dist"
+    "pkg:build": "mkdir -p dist; pkg bin/i3-organizer --out-path dist",
+    "watch": "babel --watch src -o lib",
+    "build": "babel src -o lib"
   }
 }
