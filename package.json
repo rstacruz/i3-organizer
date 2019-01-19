@@ -22,12 +22,16 @@
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-typescript": "^7.1.0",
+    "@types/array-uniq": "^1.0.1",
+    "@types/lodash.throttle": "^4.1.4",
+    "@types/meow": "^5.0.0",
+    "@types/node": "^10.12.18",
     "pkg": "^4.3.5",
     "typescript": "^3.2.4"
   },
   "scripts": {
     "pkg:build": "mkdir -p dist; pkg bin/i3-organizer --out-path dist",
-    "watch": "babel --watch src -o lib",
-    "build": "babel src -o lib"
+    "watch": "babel --watch src --out-dir lib --extensions '.ts'",
+    "build": "babel src --out-dir lib --extensions '.ts'"
   }
 }
