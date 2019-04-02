@@ -15,6 +15,7 @@ const DEFAULTS = {
     'Pamac-manager': 'Pamac',
     'System-config-printer.py': 'Printer',
     'Virt-manager': 'VM',
+    'Figma-linux': 'Figma',
     Chrome: 'Web',
     Chromium: 'Web',
     Epiphany: 'Web',
