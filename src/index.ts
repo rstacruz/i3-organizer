@@ -70,6 +70,7 @@ async function run() {
       .create(pidfile)
       .removeOnExit()
   }
+
   if (flags.foreground || flags.daemon) {
     if (!flags.daemon) {
       console.log('running in foreground, ^C to abort')
@@ -96,14 +97,6 @@ function organize(options: Options): string[] {
 
   // Return the messages
   return [...autoRename(options, root)]
-}
-
-/**
- * Runs i3 messages
- */
-
-function execute(messages: string[]): void {
-  execSync(`i3-msg ${messages.join(', ')}`)
 }
 
 module.exports = { run }
