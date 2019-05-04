@@ -25,6 +25,7 @@ const DEFAULTS = {
     Termite: 'Term',
     URxvt: 'Term',
     ViberPC: 'Viber',
+    vlc: 'VLC',
     VSCodium: 'Code'
   }
 }
