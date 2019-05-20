@@ -16,6 +16,7 @@ const DEFAULTS = {
     'System-config-printer.py': 'Printer',
     'Virt-manager': 'VM',
     'Figma-linux': 'Figma',
+    Alacritty: 'Term',
     Chrome: 'Web',
     Chromium: 'Web',
     Epiphany: 'Web',
