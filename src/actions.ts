@@ -87,7 +87,8 @@ function renameMsg(
   )
 
   let focusedNames = nodeNames.map(
-    (className: string) => (aliases && aliases[className]) || className
+    (className: string) =>
+      (aliases && aliases[className.toLowerCase()]) || className
   )
 
   let focusedName = uniq(focusedNames.sort()).join(' · ')
