@@ -56,6 +56,13 @@ function autoRename(options: Options, root: RootNode): string[] {
   let number = 0
   let rnumber = 0
 
+  const mainWorkspaces = workspaces.filter(workspace => {
+    return !!isMainOutput(outputs[workspace.output])
+  })
+
+  // How many non-main workspaces are there
+  const otherWorkspacesCount = workspaces.length - mainWorkspaces.length
+
   workspaces.forEach(workspace => {
     // Find the windows that we're looking for. This can be the focused window
     // (if `focusedOnly` is true), or all the windows in the node.
@@ -65,10 +72,10 @@ function autoRename(options: Options, root: RootNode): string[] {
 
     // Figure out what workspace number to use
     if (options.renumber) {
-      const isMain = isMainOutput(outputs[workspace.output])
+      const isMain = mainWorkspaces.includes(workspace)
       if (!isMain && options.renumberOnRight) {
         rnumber += 1
-        workspaceNum = 10 - rnumber
+        workspaceNum = 9 - otherWorkspacesCount + rnumber
       } else {
         number += 1
         workspaceNum = number
