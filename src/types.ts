@@ -4,6 +4,7 @@ export interface ClassAliases {
 
 export interface Options {
   renumber?: boolean
+  renumberOnRight?: boolean
   workspaceFormat: string
   emptyFormat: string
   focusedOnly?: boolean
@@ -35,6 +36,12 @@ export interface RootNode extends NodeBase {
 
 export interface OutputNode extends NodeBase {
   type: 'output'
+  rect: {
+    x: number
+    y: number
+    width: number
+    height: number
+  }
 }
 
 // A window!

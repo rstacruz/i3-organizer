@@ -46,6 +46,7 @@ async function run() {
     focusedOnly: Conf.focusedOnly,
     lockedSymbol: Conf.lockedSymbol,
     renumber: Conf.renumber,
+    renumberOnRight: Conf.renumberOnRight,
     classAliases: Conf.classAliases
   }
 

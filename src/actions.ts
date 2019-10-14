@@ -2,7 +2,7 @@ import {
   RootNode,
   AnyNode,
   WorkspaceNode,
-  ContainerNode,
+  OutputNode,
   Options,
   ClassAliases
 } from './types'
@@ -22,34 +22,62 @@ import {
   getClassName,
   getConcernedWindows,
   query,
-  isWorkspace
+  isWorkspace,
+  isOutput
 } from './utils'
 import uniq from 'array-uniq'
+import keyBy from 'lodash.keyby'
+import { Dictionary } from 'lodash'
+
+/** Gets a list of output nodes (ie, displays) */
+function getOutputs(root: RootNode): Dictionary<OutputNode> {
+  const outputs = query(root, isOutput) as OutputNode[]
+  const outputObj = keyBy(outputs, node => node.name)
+  return outputObj
+}
+
+/** Checks if a given output is the "primary" one */
+function isMainOutput(output: OutputNode) {
+  return output.rect.x === 0 && output.rect.y === 0
+}
 
 /**
  * Autorename workspaces.
  */
 
 function autoRename(options: Options, root: RootNode): string[] {
-  const workspaces = query(root, isWorkspace)
+  const workspaces = query(root, isWorkspace) as WorkspaceNode[]
+
+  // Get the outputs
+  const outputs = getOutputs(root)
+
   let result: any[] = []
+
   let number = 0
+  let rnumber = 0
 
-  workspaces.forEach((subnode: AnyNode) => {
-    if (subnode.type !== 'workspace') return
-
-    // Coerce to a workspace.
-    const workspace: WorkspaceNode = subnode as WorkspaceNode
-
-    number += 1
-
+  workspaces.forEach(workspace => {
     // Find the windows that we're looking for. This can be the focused window
     // (if `focusedOnly` is true), or all the windows in the node.
     const nodes = getConcernedWindows(options, workspace)
 
+    let workspaceNum = workspace.num
+
+    // Figure out what workspace number to use
+    if (options.renumber) {
+      const isMain = isMainOutput(outputs[workspace.output])
+      if (!isMain && options.renumberOnRight) {
+        rnumber += 1
+        workspaceNum = 10 - rnumber
+      } else {
+        number += 1
+        workspaceNum = number
+      }
+    }
+
     const renameOpts: RenameMsgOptions = {
       ...options,
-      number: options.renumber ? number : workspace.num
+      number: workspaceNum
     }
 
     // Add the "rename" i3 messages.

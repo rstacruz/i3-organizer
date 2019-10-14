@@ -1,4 +1,4 @@
-import { AnyNode, ContainerNode, Options, WorkspaceNode } from './types'
+import { AnyNode, Options, WorkspaceNode, OutputNode } from './types'
 
 function getClassName(con: AnyNode): string | undefined {
   return con.window_properties && con.window_properties.class
@@ -126,8 +126,12 @@ function compact<T>(list: (T | undefined)[]): T[] {
  * Check if a given node is a workspace, and not an internal one at that
  */
 
-function isWorkspace(node: AnyNode) {
+function isWorkspace(node: AnyNode): node is WorkspaceNode {
   return node.type === 'workspace' && (node as WorkspaceNode).output !== '__i3'
+}
+
+function isOutput(node: AnyNode): node is OutputNode {
+  return node.type === 'output' && node.name !== '__i3'
 }
 
 /*
@@ -141,5 +145,6 @@ export {
   getLabel,
   query,
   compact,
-  isWorkspace
+  isWorkspace,
+  isOutput
 }

@@ -2,3 +2,7 @@ node_modules
 
 # Compiled from /src via babel
 lib
+
+
+.yarn/releases
+.yarnrc
