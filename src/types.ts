@@ -3,12 +3,24 @@ export interface ClassAliases {
 }
 
 export interface Options {
+  /** Renumber workspaces to be sequential (1, 2, 3, 4) */
   renumber?: boolean
+
+  /** Rename workspaces based on the windows that are open */
+  autoRename: boolean
+
+  /** On dual displays, move the non-primary workspaces to 7, 8, 9 */
   renumberOnRight?: boolean
+
+  /** If this is found in the name, don't auto-rename */
+  lockedSymbol?: string | false
+
+  /** Format for a workspace with names */
   workspaceFormat: string
+
+  /** Format for a workspace without windows. Only when autoRename is on */
   emptyFormat: string
   focusedOnly?: boolean
-  lockedSymbol?: string | false
   output?: string
   classAliases?: ClassAliases
 }

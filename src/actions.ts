@@ -117,10 +117,12 @@ function renameMsg(
   const oldName = workspace.name
 
   // Find class names, map them to the alias map if need be
+  // eg, ['urxvt', 'chrome']
   let nodeNames: string[] = compact(
     nodes.map((node: AnyNode) => node && getClassName(node))
   )
 
+  // eg, ['Term', 'Web']
   let focusedNames = nodeNames.map(
     (className: string) =>
       (aliases && aliases[className.toLowerCase()]) || className
@@ -130,16 +132,18 @@ function renameMsg(
   let newName
 
   // Check if the workspace is locked
-  const isLocked =
-    typeof lockedSymbol === 'string'
-      ? workspace.name.includes(lockedSymbol)
-      : false
+  const isLocked = isWorkspaceLocked(workspace, options)
 
   // Build the new name (eg, '3:Vim')
   if (isLocked) {
-    newName = format
-      .replace('{{number}}', `${number}`)
-      .replace('{{name}}', getLabel(workspace.name))
+    const label = getLabel(workspace.name)
+    if (label) {
+      newName = format
+        .replace('{{number}}', `${number}`)
+        .replace('{{name}}', label)
+    } else {
+      newName = `${number}`
+    }
   } else if (focusedName) {
     newName = format
       .replace('{{number}}', `${number}`)
@@ -152,7 +156,28 @@ function renameMsg(
   if (newName === oldName) return []
 
   const s = JSON.stringify.bind(JSON)
-  return [`rename workspace ${s(oldName)} to ${s(newName)}`]
+  const msg = `rename workspace ${s(oldName)} to ${s(newName)}`
+  // console.log(msg)
+  return [msg]
+}
+
+/**
+ * Checks if a given workspace is meant to be renamed or not.
+ */
+
+function isWorkspaceLocked(
+  workspace: WorkspaceNode,
+  options: Options
+): Boolean {
+  const { lockedSymbol, autoRename } = options
+
+  if (!autoRename) return true
+
+  if (typeof lockedSymbol === 'string') {
+    return workspace.name.includes(lockedSymbol)
+  }
+
+  return false
 }
 
 /*

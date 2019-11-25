@@ -25,7 +25,7 @@ function startServer({ onWorkspace, simulate }: ServerOpts) {
     i3.on('output', pingThrottled)
     i3.on('error', () => {
       console.log('error encountered, restarting IPC connection')
-      stream.close()
+      // stream.close()
       setTimeout(run, 1000)
     })
 

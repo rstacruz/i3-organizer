@@ -1,17 +1,26 @@
+import { Options } from './types'
+
+// @ts-ignore
 const pkg = require('../package.json')
 
-const DEFAULTS = {
+const DEFAULTS: Options = {
+  // Format for a workspace with names
   workspaceFormat: '{{number}}:{{name}}',
+
+  // Format for a workspace without windows. Only when autoRename is on
   emptyFormat: '{{number}}:-',
 
-  // If this is found in the name, leave it alone
+  // If this is found in the name, don't auto-rename
   lockedSymbol: '+',
   focusedOnly: false,
 
   // Renumber workspaces to be sequential (1, 2, 3, 4)
   renumber: true,
 
-  // On dual displays, move the other workspace to 7, 8, 9
+  // Rename workspaces based on the windows that are open
+  autoRename: false,
+
+  // On dual displays, move the non-primary workspaces to 7, 8, 9
   renumberOnRight: true,
 
   classAliases: {

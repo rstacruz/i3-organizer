@@ -5,7 +5,6 @@ import Conf from './config'
 import { startServer } from './server'
 import { checkI3 } from './check_i3'
 import { Options } from './types'
-import i3 from 'i3'
 
 function cli() {
   return Meow(
@@ -38,13 +37,14 @@ function cli() {
 }
 
 async function run() {
-  const { flags, input } = cli()
+  const { flags } = cli()
 
-  const config = {
+  const config: Options = {
     workspaceFormat: Conf.workspaceFormat,
     emptyFormat: Conf.emptyFormat,
     focusedOnly: Conf.focusedOnly,
     lockedSymbol: Conf.lockedSymbol,
+    autoRename: Conf.autoRename,
     renumber: Conf.renumber,
     renumberOnRight: Conf.renumberOnRight,
     classAliases: Conf.classAliases

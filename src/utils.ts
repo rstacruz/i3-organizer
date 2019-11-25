@@ -108,7 +108,7 @@ function getLabel(name: string) {
     const [_n, label] = name.split(':')
     return label
   } else {
-    return name
+    return ''
   }
 }
 
