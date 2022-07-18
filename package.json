@@ -16,7 +16,7 @@
     "meow": "^5.0.0",
     "npid": "^0.4.0",
     "rc": "^1.2.8",
-    "thenify": "^3.3.0"
+    "thenify": "^3.3.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
